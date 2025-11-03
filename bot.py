@@ -46,6 +46,14 @@ def main():
                 send_message(get_chat_id(update), 'Greetings! Type "Dice" to roll the dice!')
             elif get_message_text(update).lower() == 'qa24':
                 send_message(get_chat_id(update), 'csc31') 
+            #
+            elif get_message_text(update).lower() == 'cmd1':
+                send_message(get_chat_id(update), 'resp1') 
+            elif get_message_text(update).lower() == 'cmd2':
+                send_message(get_chat_id(update), 'resp2') 
+            elif get_message_text(update).lower() == 'cmd3':
+                send_message(get_chat_id(update), 'resp3') 
+            #
             elif get_message_text(update).lower() == 'python':
                 send_message(get_chat_id(update), 'version 3.14')
             elif get_message_text(update).lower() == 'dice':
