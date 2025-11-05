@@ -1,19 +1,21 @@
 import time
-
+import os
 import requests
 import random
+import datetime
+from dotenv import load_dotenv
 
-bot_key = '8204532312:AAHh1EVv-LuOK6AeGUoFT7xFyHY0aRfFZ0s'
+load_dotenv()
 
-url = f"https://api.telegram.org/bot{bot_key}/"  # don't forget to change the token!
+TOKEN = os.getenv("TOKEN")
+ADMIN_ID = os.getenv("ADMIN_ID")
+
+url = f"https://api.telegram.org/bot{TOKEN}/" 
 
 
 def last_update(request):
     response = requests.get(request + 'getUpdates')
-    # TODO: Uncomment just for local testing
-    # print(response)
     response = response.json()
-    # print(response)
     results = response['result']
     total_updates = len(results) - 1
     return results[total_updates]
@@ -39,7 +41,6 @@ def main():
     try:
         update_id = last_update(url)['update_id']
         while True:
-            # pythonanywhere
             time.sleep(3)
             update = last_update(url)
             if update_id == update['update_id']:
@@ -53,6 +54,18 @@ def main():
                     break
                 elif get_message_text(update).lower() == 'python':
                     send_message(get_chat_id(update), 'version 3.10')
+                ### 
+                elif get_message_text(update).lower() == 'reverse':
+                    reversed_text = get_message_text(update)[::-1] 
+                    send_message(get_chat_id(update), reversed_text)
+                elif get_message_text(update).lower() == 'id':
+                        chat_id = get_chat_id(update)
+                        send_message(chat_id, f"Your сhat ID is: {chat_id}")
+                elif get_message_text(update).lower() == 'time':
+                        now = datetime.datetime.now()
+                        current_time_str = now.strftime("%Y-%m-%d %H:%M:%S")
+                        send_message(get_chat_id(update), f"Current time: {current_time_str}")
+                ###
                 elif get_message_text(update).lower() == 'dice':
                     _1 = random.randint(1, 6)
                     _2 = random.randint(1, 6)
@@ -65,8 +78,5 @@ def main():
         print('\nБот зупинено')
 
 
-# print(__name__)
 if __name__ == '__main__':
     main()
-# print(__name__)
-# print('HELLO') #При подключении файла как бибилиотеки import bot, в другой .py файл проекта, этот код будет запускатся при включении того, другого файла
