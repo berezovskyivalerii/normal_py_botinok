@@ -4,6 +4,7 @@ import requests
 import random
 import datetime
 from dotenv import load_dotenv
+from calculator import calculate_expression
 
 load_dotenv()
 
@@ -54,7 +55,6 @@ def main():
                     break
                 elif get_message_text(update).lower() == 'python':
                     send_message(get_chat_id(update), 'version 3.10')
-                ### 
                 elif get_message_text(update).lower() == 'reverse':
                     reversed_text = get_message_text(update)[::-1] 
                     send_message(get_chat_id(update), reversed_text)
@@ -65,14 +65,17 @@ def main():
                         now = datetime.datetime.now()
                         current_time_str = now.strftime("%Y-%m-%d %H:%M:%S")
                         send_message(get_chat_id(update), f"Current time: {current_time_str}")
-                ###
                 elif get_message_text(update).lower() == 'dice':
                     _1 = random.randint(1, 6)
                     _2 = random.randint(1, 6)
                     send_message(get_chat_id(update),
                                  'You have ' + str(_1) + ' and ' + str(_2) + '!\nYour result is ' + str(_1 + _2) + '!')
                 else:
-                    send_message(get_chat_id(update), 'Sorry, I don\'t understand you :(')
+                    result = calculate_expression(get_message_text(update))
+                    if result is not None:
+                        send_message(get_chat_id(update), result)
+                    else:
+                        send_message(get_chat_id(update), 'Sorry, I don\'t understand you :(')
                 update_id += 1
     except KeyboardInterrupt:
         print('\nБот зупинено')
