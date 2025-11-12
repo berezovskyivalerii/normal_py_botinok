@@ -10,8 +10,8 @@ load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
 ADMIN_ID = os.getenv("ADMIN_ID")
-
-url = f"https://api.telegram.org/bot{TOKEN}/" 
+url = os.getenv("URL")
+url = f"{URL}{TOKEN}"
 
 
 def last_update(request):
