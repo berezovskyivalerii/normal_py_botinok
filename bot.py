@@ -12,11 +12,11 @@ TOKEN = os.getenv("TOKEN")
 ADMIN_ID = os.getenv("ADMIN_ID")
 URL = os.getenv("URL")
 
-url = f"{URL}/{TOKEN}"
+url = f"{URL}{TOKEN}/"
 
 
 def last_update(request):
-    response = requests.get(request + '/getUpdates')
+    response = requests.get(request + 'getUpdates')
     response_json = response.json()
     if not response_json.get('ok', True):
         print(f"Status Code: {response.status_code}")
@@ -41,7 +41,7 @@ def get_message_text(update):
 
 def send_message(chat, text):
     params = {'chat_id': chat, 'text': text}
-    response = requests.post(url + '/sendMessage', data=params)
+    response = requests.post(url + 'sendMessage', data=params)
     return response
 
 
