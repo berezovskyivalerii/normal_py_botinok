@@ -10,7 +10,7 @@ load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
 ADMIN_ID = os.getenv("ADMIN_ID")
-url = os.getenv("URL")
+URL = os.getenv("URL")
 url = f"{URL}{TOKEN}"
 
 
