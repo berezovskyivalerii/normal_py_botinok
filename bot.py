@@ -12,7 +12,7 @@ TOKEN = os.getenv("TOKEN")
 ADMIN_ID = os.getenv("ADMIN_ID")
 URL = os.getenv("URL")
 
-url = f"{URL}{TOKEN}"
+url = f"{URL}/{TOKEN}"
 
 
 def last_update(request):
@@ -23,7 +23,7 @@ def last_update(request):
         print(f"Response: {response_json}")
         import sys
         sys.exit(1)
-        
+
     results = response_json['result']
     total_updates = len(results) - 1
     return results[total_updates]
