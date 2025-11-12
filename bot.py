@@ -11,13 +11,20 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 ADMIN_ID = os.getenv("ADMIN_ID")
 URL = os.getenv("URL")
+
 url = f"{URL}{TOKEN}"
 
 
 def last_update(request):
     response = requests.get(request + 'getUpdates')
-    response = response.json()
-    results = response['result']
+    response_json = response.json()
+    if not response_json.get('ok', True):
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response_json}")
+        import sys
+        sys.exit(1)
+        
+    results = response_json['result']
     total_updates = len(results) - 1
     return results[total_updates]
 
